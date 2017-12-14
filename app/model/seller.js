@@ -9,7 +9,11 @@ module.exports = app => {
       primaryKey: true,
       autoIncrement: true,
     },
-    openid:STRING
+    openid:STRING,
+    shopname:STRING,
+    shopmanager:STRING,
+    orders:INTEGER,
+    saleamount:INTEGER
   });
   Seller.prototype.associate = function() {
     // app.model.User.hasMany(app.model.Post, { foreignKey: 'openid' });

@@ -13,7 +13,7 @@ module.exports = app => {
       app.logger.debug(clientId, "clientId");
       app.logger.debug(clientSecret, "clientSecret");
 
-      let rescode = 0, user = null;
+      let user = null;
 
       const result = yield this.ctx.curl('https://api.weixin.qq.com/sns/jscode2session', {
         // 必须指定 method
@@ -39,12 +39,12 @@ module.exports = app => {
         this.ctx.throw(result.status, errorMsg);
       }
       if (parseInt(clientSecret) == 1) {
-        rescode = yield this.ctx.service.seller.find({openid: result.data.openid});
+        user = yield this.ctx.service.seller.find({openid: result.data.openid});
       }
       else {
-        rescode = yield this.ctx.service.user.find({openid: result.data.openid});
+        user = yield this.ctx.service.user.find({openid: result.data.openid});
       }
-      if (rescode == 0) {
+      if (user == 0) {
         if (parseInt(clientSecret) == 1) {
           user = yield this.ctx.service.seller.create({openid: result.data.openid});
         }
@@ -52,14 +52,16 @@ module.exports = app => {
           user = yield this.ctx.service.user.create({openid: result.data.openid});
         }
       }
-
-      return {
+      const client = Object.assign({
         "grants": [
           "password"
         ],
         openid: result.data.openid,
         session_key: result.data.session_key
-      };
+      }, {
+        user:user.dataValues
+      });
+      return client;
     }
 
     * getUser(username, password) {
@@ -107,7 +109,7 @@ module.exports = app => {
         accessTokenExpiresAt: token.accessTokenExpiresAt
       };
       this.ctx.session.maxAge = 3024000;
-      token.openid = client.openid;
+      token.users = client.user;
       const _token = Object.assign({}, token, {
         user
       }, {
