@@ -3,25 +3,22 @@
 module.exports = app => {
   const { STRING, INTEGER,BOOLEAN, UUID,DataTypes } = app.Sequelize;
 
-  const Seller = app.model.define('seller', {
+  const Menucatgory = app.model.define('menucatgory', {
     id: {
       type: INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    uuid:{
+    uuid:STRING,
+    categoryid:{
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1
     },
-    openid:STRING,
-    shopname:STRING,
-    shopmanager:STRING,
-    orders:INTEGER,
-    saleamount:INTEGER
+    categoryname:STRING
   });
-  Seller.prototype.associate = function() {
-    // app.model.User.hasMany(app.model.Post, { foreignKey: 'openid' });
+  Menucatgory.prototype.associate = function() {
+    // app.model.Seller.hasMany(app.model.Menucatgory, { foreignKey: 'uuid' });
     // app.model.User.hasOne(app.model.findcar, { foreignKey: 'openid' });
   };
-  return Seller;
+  return Menucatgory;
 };
