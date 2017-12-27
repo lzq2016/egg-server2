@@ -9,7 +9,7 @@ module.exports = app => {
       // this.ctx.validate(createRule);
       // this.validator.validate(createRule, this.ctx.req.header);
       this.ctx.body = 'ok';
-      ctx.status = 200;
+      this.ctx.status = 200;
     }
 
     * getuser() {

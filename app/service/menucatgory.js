@@ -22,12 +22,12 @@ module.exports = app => {
       return yield category.update(updates);
     }
 
-    // * del(id) {
-    //   const user = yield this.ctx.model.User.findById(id);
-    //   if (!user) {
-    //     this.ctx.throw(404, 'user not found');
-    //   }
-    //   return user.destroy();
-    // }
+    * del(categoryid) {
+      const category = yield this.ctx.model.Menucatgory.findOne({categoryid: categoryid});
+      if (!category) {
+        this.ctx.throw(404, '数据库中categoryid不存在');
+      }
+      return category.destroy();
+    }
   };
 };

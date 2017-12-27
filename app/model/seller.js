@@ -20,8 +20,9 @@ module.exports = app => {
     saleamount:INTEGER
   });
   Seller.prototype.associate = function() {
-    // app.model.User.hasMany(app.model.Post, { foreignKey: 'openid' });
-    // app.model.User.hasOne(app.model.findcar, { foreignKey: 'openid' });
+    app.model.Seller.hasMany(app.model.Table, { foreignKey: 'uuid' });
+    app.model.Seller.hasMany(app.model.Menucatgory, { foreignKey: 'uuid' });
+    app.model.Seller.hasMany(app.model.Dish, { foreignKey: 'uuid' });
   };
   return Seller;
 };

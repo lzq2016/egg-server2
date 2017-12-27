@@ -17,8 +17,9 @@ module.exports = app => {
     categoryname:STRING
   });
   Menucatgory.prototype.associate = function() {
-    // app.model.Seller.hasMany(app.model.Menucatgory, { foreignKey: 'uuid' });
-    // app.model.User.hasOne(app.model.findcar, { foreignKey: 'openid' });
+    app.model.Menucatgory.belongsTo(app.model.Seller, {foreignKey: 'uuid'});
+    app.model.Menucatgory.hasMany(app.model.Dish, { foreignKey: 'categoryid' });
+
   };
   return Menucatgory;
 };

@@ -1,11 +1,11 @@
 'use strict';
 
 module.exports = app => {
-  class MenucatgoryController extends app.Controller {
+  class TableController extends app.Controller {
     * create() {
       if(this.ctx.request.body.uuid)
       {
-        const result = yield this.ctx.service.menucatgory.create(this.ctx.request.body);
+        const result = yield this.ctx.service.table.create(this.ctx.request.body);
         if(result.dataValues.uuid)
         {
           this.ctx.body = {
@@ -24,10 +24,10 @@ module.exports = app => {
       }
     }
     * update() {
-      if(this.ctx.request.body.categoryid)
+      if(this.ctx.request.body.tableid)
       {
-        const result = yield this.ctx.service.menucatgory.update(this.ctx.request.body.categoryid,this.ctx.request.body);
-        if(result.dataValues.categoryid)
+        const result = yield this.ctx.service.table.update(this.ctx.request.body.tableid,this.ctx.request.body);
+        if(result.dataValues.tableid)
         {
           this.ctx.body = {
             code: 1
@@ -40,16 +40,16 @@ module.exports = app => {
 
       }
       else{
-        this.ctx.throw(404, '参数categoryid不存在');
+        this.ctx.throw(404, '参数tableid不存在');
         this.ctx.body = {code: 0};
       }
     }
     * del() {
-      const categoryid = this.ctx.params.categoryid;
-      if(categoryid)
+      const tableid = this.ctx.params.tableid;
+      if(tableid)
       {
-        const result = yield this.ctx.service.menucatgory.del(categoryid);
-        if(result.dataValues.categoryid)
+        const result = yield this.ctx.service.table.del(tableid);
+        if(result.dataValues.tableid)
         {
           this.ctx.body = {
             code: 1
@@ -60,11 +60,11 @@ module.exports = app => {
           };
         }
       }else{
-        this.ctx.throw(404, '参数categoryid不存在');
+        this.ctx.throw(404, '参数tableid不存在');
         this.ctx.body = {code: 0};
       }
     }
   }
 
-  return MenucatgoryController;
+  return TableController;
 };
