@@ -23,12 +23,15 @@ module.exports = app => {
       return yield this.ctx.model.Seller.update(updates,{where:{id:id}});
     }
 
-    // * del(id) {
-    //   const user = yield this.ctx.model.User.findById(id);
-    //   if (!user) {
-    //     this.ctx.throw(404, 'user not found');
-    //   }
-    //   return user.destroy();
-    // }
+    * del(uuid) {
+      const option = {
+        uuid:uuid
+      };
+      const seller = yield this.ctx.model.Seller.findOne({where:option});
+      if (!seller) {
+        this.ctx.throw(404, '数据库中uuid不存在');
+      }
+      return seller.destroy();
+    }
   };
 };

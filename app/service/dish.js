@@ -14,17 +14,26 @@ module.exports = app => {
       return yield this.ctx.model.Dish.create(option);
     }
 
-    * update(dishid, updates) {
-      const dish = yield this.ctx.model.Dish.findOne({dishid: dishid});
+    * update(uuid, dishid, updates) {
+      const option = {
+        uuid: uuid,
+        dishid: dishid
+      };
+      const dish = yield this.ctx.model.Dish.findOne({where:option});
       if (!dish) {
-        this.ctx.throw(404, '数据库中dishid不存在');
+        this.ctx.throw(404, '数据库中uuid或dishid不存在');
       }
       return yield dish.update(updates);
     }
-    * del(dishid) {
-      const dish = yield this.ctx.model.Dish.findOne({dishid: dishid});
+
+    * del(uuid,dishid) {
+      const option = {
+        uuid:uuid,
+        dishid:dishid
+      };
+      const dish = yield this.ctx.model.Dish.findOne({where:option});
       if (!dish) {
-        this.ctx.throw(404, '数据库中dish不存在');
+        this.ctx.throw(404, '数据库中uuid或dish不存在');
       }
       return dish.destroy();
     }

@@ -14,18 +14,26 @@ module.exports = app => {
       return yield this.ctx.model.Menucatgory.create(option);
     }
 
-    * update(categoryid, updates) {
-      const category = yield this.ctx.model.Menucatgory.findOne({categoryid: categoryid});
+    * update(uuid,categoryid,updates) {
+      const option = {
+        uuid:uuid,
+        categoryid:categoryid
+      };
+      const category = yield this.ctx.model.Menucatgory.findOne({where:option});
       if (!category) {
-        this.ctx.throw(404, '数据库中categoryid不存在');
+        this.ctx.throw(404, '数据库中categoryid或uuid不存在');
       }
       return yield category.update(updates);
     }
 
-    * del(categoryid) {
-      const category = yield this.ctx.model.Menucatgory.findOne({categoryid: categoryid});
+    * del(uuid,categoryid) {
+      const option = {
+        uuid:uuid,
+        categoryid:categoryid
+      };
+      const category = yield this.ctx.model.Menucatgory.findOne({where:option});
       if (!category) {
-        this.ctx.throw(404, '数据库中categoryid不存在');
+        this.ctx.throw(404, '数据库中categoryid或uuid不存在');
       }
       return category.destroy();
     }

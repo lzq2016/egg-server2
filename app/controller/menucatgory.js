@@ -3,65 +3,61 @@
 module.exports = app => {
   class MenucatgoryController extends app.Controller {
     * create() {
-      if(this.ctx.request.body.uuid)
-      {
-        const result = yield this.ctx.service.menucatgory.create(this.ctx.request.body);
-        if(result.dataValues.uuid)
-        {
-          this.ctx.body = {
-            code: 1
-          };
-        }else{
-          this.ctx.body = {
-            code: 0
-          };
-        }
-
-      }
-      else{
-        this.ctx.throw(404, '参数uuid不存在');
-        this.ctx.body = {code: 0};
+      const createRule = {
+        categoryname: 'string',
+        uuid: 'string'
+      };
+      this.ctx.validate(createRule, this.ctx.request.body);
+      const result = yield this.ctx.service.menucatgory.create(this.ctx.request.body);
+      if (result.dataValues.uuid) {
+        this.ctx.body = {
+          code: 1
+        };
+      } else {
+        this.ctx.body = {
+          code: 0
+        };
       }
     }
+
     * update() {
-      if(this.ctx.request.body.categoryid)
-      {
-        const result = yield this.ctx.service.menucatgory.update(this.ctx.request.body.categoryid,this.ctx.request.body);
-        if(result.dataValues.categoryid)
-        {
-          this.ctx.body = {
-            code: 1
-          };
-        }else{
-          this.ctx.body = {
-            code: 0
-          };
-        }
-
-      }
-      else{
-        this.ctx.throw(404, '参数categoryid不存在');
-        this.ctx.body = {code: 0};
+      const createRule = {
+        categoryname: 'string',
+        uuid: 'string',
+        categoryid: 'string'
+      };
+      this.ctx.validate(createRule, this.ctx.request.body);
+      const categoryid = this.ctx.request.body.categoryid;
+      const uuid = this.ctx.request.body.uuid;
+      const result = yield this.ctx.service.menucatgory.update(uuid, categoryid, this.ctx.request.body);
+      if (result.dataValues.categoryid) {
+        this.ctx.body = {
+          code: 1
+        };
+      } else {
+        this.ctx.body = {
+          code: 0
+        };
       }
     }
+
     * del() {
-      const categoryid = this.ctx.params.categoryid;
-      if(categoryid)
-      {
-        const result = yield this.ctx.service.menucatgory.del(categoryid);
-        if(result.dataValues.categoryid)
-        {
-          this.ctx.body = {
-            code: 1
-          };
-        }else{
-          this.ctx.body = {
-            code: 0
-          };
-        }
-      }else{
-        this.ctx.throw(404, '参数categoryid不存在');
-        this.ctx.body = {code: 0};
+      const createRule = {
+        categoryid: 'string',
+        uuid: 'string'
+      };
+      this.ctx.validate(createRule, this.ctx.query);
+      const categoryid = this.ctx.query.categoryid;
+      const uuid = this.ctx.query.uuid;
+      const result = yield this.ctx.service.menucatgory.del(uuid,categoryid);
+      if (result.dataValues.categoryid) {
+        this.ctx.body = {
+          code: 1
+        };
+      } else {
+        this.ctx.body = {
+          code: 0
+        };
       }
     }
   }

@@ -24,6 +24,23 @@ module.exports = app => {
         this.ctx.body = {code: 0};
       }
     }
+    * del() {
+      const createRule = {
+        uuid: 'string'
+      };
+      this.ctx.validate(createRule, this.ctx.query);
+      const uuid = this.ctx.query.uuid;
+      const result = yield this.ctx.service.seller.del(uuid);
+      if (result.dataValues.uuid) {
+        this.ctx.body = {
+          code: 1
+        };
+      } else {
+        this.ctx.body = {
+          code: 0
+        };
+      }
+    }
   }
 
   return SellerController;

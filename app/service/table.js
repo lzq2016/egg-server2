@@ -14,18 +14,26 @@ module.exports = app => {
       return yield this.ctx.model.Table.create(option);
     }
 
-    * update(tableid, updates) {
-      const table = yield this.ctx.model.Table.findOne({where: {tableid: tableid}});
+    * update(uuid, tableid, updates) {
+      const option = {
+        uuid: uuid,
+        tableid: tableid
+      };
+      const table = yield this.ctx.model.Table.findOne({where: option});
       if (!table) {
-        this.ctx.throw(404, '数据库中tableid不存在');
+        this.ctx.throw(404, '数据库中uuid或tableid不存在');
       }
       return yield table.update(updates);
     }
 
-    * del(tableid) {
-      const table = yield this.ctx.model.Table.findOne({where: {tableid: tableid}});
+    * del(uuid,tableid) {
+      const option = {
+        uuid: uuid,
+        tableid: tableid
+      };
+      const table = yield this.ctx.model.Table.findOne({where: option});
       if (!table) {
-        this.ctx.throw(404, '数据库中tableid不存在');
+        this.ctx.throw(404, '数据库中uuid或tableid不存在');
       }
       return table.destroy();
     }

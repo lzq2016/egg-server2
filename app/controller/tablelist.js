@@ -3,29 +3,31 @@
 module.exports = app => {
   class TablelistController extends app.Controller {
     * getlist() {
-      if(this.ctx.params.uuid && this.ctx.params.type)
-      {
-        let list = [];
-        const result = yield this.ctx.service.table.getlist(this.ctx.params.uuid,this.ctx.params.type);
-        if(result.length != 0)
-        {
-          for(let i=0;i<result.length;i++)
-          {
-            list.push(result[i].dataValues);
-          }
-          this.ctx.body = {
-            code: 1,
-            list:list
-          };
-        }else{
-          this.ctx.body = {
-            code: 0,
-            list:[]
-          };
+      const createRule = {
+        type: 'string',
+        uuid: 'string'
+      };
+      this.ctx.validate(createRule, this.ctx.query);
+      let list = [];
+      const uuid = this.ctx.query.uuid;
+      const type = this.ctx.query.type;
+      const result = yield this.ctx.service.table.getlist(uuid, type);
+      if (result.length != 0) {
+        for (let i = 0; i < result.length; i++) {
+          list.push(result[i].dataValues);
         }
-
+        this.ctx.body = {
+          code: 1,
+          list: list
+        };
+      } else {
+        this.ctx.body = {
+          code: 0,
+          list: []
+        };
       }
     }
+
     // * create() {
     //   if(this.ctx.request.body.uuid)
     //   {
