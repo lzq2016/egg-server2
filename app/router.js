@@ -15,6 +15,7 @@ module.exports = app => {
   app.post('/dish/create', 'dish.create');
   app.post('/dish/update', 'dish.update');
   app.get('/dish/del', 'dish.del');
+  app.get('/dish/find', 'dish.find');
 
   app.post('/table/create', 'table.create');
   app.post('/table/update', 'table.update');

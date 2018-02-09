@@ -41,7 +41,28 @@ module.exports = app => {
         };
       }
     }
-
+    * find() {
+      const createRule = {
+        uuid: 'string',
+        recommend:'string'
+      };
+      this.ctx.validate(createRule, this.ctx.query);
+      var option = {
+        uuid:this.ctx.query.uuid,
+        recommend:this.ctx.query.recommend
+      };
+      const result = yield this.ctx.service.dish.find(option);
+      if (result.length) {
+        this.ctx.body = {
+          code: 1,
+          list:result
+        };
+      } else {
+        this.ctx.body = {
+          code: 0
+        };
+      }
+    }
     * del() {
       const createRule = {
         uuid: 'string',

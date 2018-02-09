@@ -15,7 +15,8 @@ module.exports = app => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1
     },
-    dishname:STRING
+    dishname:STRING,
+    recommend:BOOLEAN
   });
   Dish.prototype.associate = function() {
     app.model.Dish.belongsTo(app.model.Menucatgory, {foreignKey: 'categoryid'});

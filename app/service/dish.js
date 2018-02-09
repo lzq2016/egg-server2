@@ -2,13 +2,13 @@
 
 module.exports = app => {
   return class Dish extends app.Service {
-    // * find(option) {
-    //   let seller = yield this.ctx.model.Seller.findOne({where: option});
-    //   if (!seller) {
-    //     return 0;
-    //   }
-    //   return seller;
-    // }
+    * find(option) {
+      let seller = yield this.ctx.model.Dish.findAll({where: option});
+      if (!seller) {
+        return 0;
+      }
+      return seller;
+    }
 
     * create(option) {
       return yield this.ctx.model.Dish.create(option);
